@@ -1,0 +1,13 @@
+serverFiles:
+  alerting_rules.yml:
+    groups:
+      - name: ContainerAlerts
+        rules:
+          - alert: HighContainerMemoryUsage
+            expr: container_memory_usage_bytes > 500000000
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Warning: Container memory usage is high!"
+              description: "Memory usage exceeded the 500MB threshold."

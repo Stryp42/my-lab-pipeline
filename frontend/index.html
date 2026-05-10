@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Додаток Docker Compose</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f9;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Список контактів із Бази Даних</h2>
+        <ul id="contacts-list">Завантаження...</ul>
+    </div>
+
+    <script>
+        fetch('/api/contacts')
+            .then(response => response.json())
+            .then(data => {
+                const list = document.getElementById('contacts-list');
+                list.innerHTML = '';
+                data.forEach(contact => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>${contact.name}</strong> — ${contact.role}`;
+                    list.appendChild(li);
+                });
+            })
+            .catch(err => {
+                document.getElementById('contacts-list').innerHTML = 'Помилка з\'єднання з API';
+            });
+    </script>
+</body>
+</html>
